@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+    <link rel="icon" href="assets/img/logo.png" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link href="https://fonts.googleapis.
+    /css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom style to animate toast */
+        .toast {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-inter bg-cover bg-center bg-no-repeat min-h-screen flex items-center justify-center relative" style="background-image: url('assets/img/bg.jpg');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- Main container -->
+    <div class="container relative z-10 w-full max-w-md mx-auto p-6">
+        <form id="loginForm" class="bg-white rounded-lg shadow-lg p-8">
+            <!-- Form with Logos -->
+            <div class="flex items-center justify-center space-x-4 mb-6 drop-shadow-lg">
+                <img src="assets/img/logo.png" alt="School Logo" class="w-12 h-auto">
+                <h1 class="text-gray-600 text-[15px] font-bold">Login Point Siswa</h1>
+                <img src="assets/img/LogoIso.jpeg" alt="ISO Logo" class="w-12 h-auto">
+            </div>
+            <div class="mb-6">
+                <label for="siswa-nis" class="block text-gray-700 text-sm font-medium mb-2">
+                    <i class="fas fa-id-card mr-2"></i> NIS
+                </label>
+                <input type="text" id="siswa-nis" placeholder="Masukan NIS" class="w-full px-3 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 transition-shadow duration-300 ease-in-out" required>
+            </div>
+            <div class="flex items-center justify-between mb-6">
+                <button id="loginBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 w-full rounded-lg transition duration-300 ease-in-out">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Masuk
+                </button>
+            </div>
+            <!-- Footer -->
+            <div class="text-sm text-center text-gray-400">
+                @ Created: JzuvDev
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-0 right-0 p-4 z-50"></div>
+
+    <script>
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white p-4 rounded-lg shadow-md mb-4 transition-opacity duration-300`;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>${message}`;
+
+            const toastContainer = document.getElementById('toastContainer');
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100); 
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 500); 
+            }, 3000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const button = document.getElementById('loginBtn');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Loading...'; 
+            button.disabled = true; 
+            setTimeout(() => {
+                const nis_siswa = document.getElementById('siswa-nis').value;
+                if (nis_siswa) {
+                    showToast('Login Successful!, Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href='dashboard/src/index.html';
+                    }, 2000);
+
+                } else {
+                    showToast('Login Failed! Please enter a valid NIS.', 'error');
+                }
+                button.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Login'; 
+                button.disabled = false; 
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
