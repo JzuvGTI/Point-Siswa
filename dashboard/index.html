@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <!-- Perbaikan pengaturan viewport untuk mencegah zoom -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
     <!-- Tailwind CSS CDN -->
@@ -32,8 +33,7 @@
     </div>
 
     <!-- Sidebar -->
-    <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-         class="fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform duration-300 transform md:relative md:translate-x-0 flex flex-col">
+    <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform duration-300 transform md:relative md:translate-x-0 flex flex-col">
         <!-- Profile Section -->
         <div class="flex flex-col items-center p-6 border-b">
             <img src="https://via.placeholder.com/80" alt="Profile" class="w-20 h-20 rounded-full mb-3 border-2 border-blue-500">
@@ -144,8 +144,8 @@
                 </button>
                 <div class="text-2xl font-semibold text-gray-800">Dashboard</div>
             </div>
-            <div class="flex items-center space-x-6">
-                <div id="clock" class="text-gray-600 text-lg mr-4"></div>
+            <div class="flex items-center space-x-4">
+                <div id="clock" class="text-gray-600 text-sm ml-2"></div>
                 <!-- Profile Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
@@ -157,12 +157,12 @@
                         <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-t-lg">
                             <i class="text-blue-500 fas fa-user mr-2 drop-shadow-lg"></i>Profile
                         </a>
-                        <a href="#" class="flex items-center px-4 py-2 hover:bg-blue-100">
-                            <i class="fas fa-cog mr-2 text-yellow-700 drop-shadow-lg"></i>Settings
+                        <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-b-lg">
+                            <i class="text-blue-500 fas fa-cog mr-2 drop-shadow-lg"></i>Pengaturan
                         </a>
                         <div class="border-t"></div>
                         <a href="#" class="flex items-center px-4 py-2 text-red-600 hover:bg-red-100 rounded-b-lg">
-                            <i class="fas fa-sign-out-alt mr-2 drop-shadow-lg"></i>Logout
+                            <i class="text-red-500 fas fa-sign-out-alt mr-2"></i>Logout
                         </a>
                     </div>
                 </div>
@@ -170,12 +170,9 @@
         </header>
 
         <!-- Main Content Area -->
-        <main class="flex-1 p-6 overflow-y-auto">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800">Dashboard Admin</h1>
-        
-            <!-- Responsif Grid Container -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <!-- Jumlah Pengawas -->
+        <main class="flex-1 p-6 overflow-y-auto no-scrollbar">
+            <h1 class="text-3xl font-semibold mb-6">Selamat Datang di Dashboard Admin</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md flex items-center">
                     <div class="w-16 h-16 bg-red-100 rounded-full mr-4 flex items-center justify-center">
                         <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
@@ -208,24 +205,36 @@
                     </div>
                 </div>
             </div>
+            <!-- Area for Charts -->
+            <div class="mt-6 bg-white p-5 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold">Statistik Pelanggaran</h2>
+                <div id="chart"></div>
+            </div>
         </main>
-        
     </div>
 
-    <!-- Script untuk Live Clock -->
     <script>
-        function updateClock() {
-            const clock = document.getElementById('clock');
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            clock.textContent = `${hours}:${minutes}:${seconds}`;
-        }
+        // JavaScript untuk menampilkan jam
+        setInterval(() => {
+            const clock = new Date().toLocaleTimeString();
+            document.getElementById('clock').innerText = clock;
+        }, 1000);
 
-        // Update clock setiap detik
-        setInterval(updateClock, 1000);
-        updateClock(); // Initialize clock immediately
+        // Menggunakan ApexCharts untuk menampilkan grafik
+        const options = {
+            chart: {
+                type: 'line',
+            },
+            series: [{
+                name: 'Pelanggaran',
+                data: [10, 20, 30, 15, 25, 40]
+            }],
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+            }
+        };
+        const chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
     </script>
 </body>
 </html>
