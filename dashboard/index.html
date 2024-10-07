@@ -45,23 +45,23 @@
             <ul class="space-y-2">
                 <!-- Dashboard Admin -->
                 <li>
-                    <a href="#" class="flex items-center p-3 text-gray-700 bg-blue-100 hover:bg-blue-100 rounded-lg transition-colors duration-200">
+                    <a href="index.html" class="flex items-center p-3 text-gray-700 bg-blue-100 hover:bg-blue-100 rounded-lg transition-colors duration-200">
                         <i class="fas fa-tachometer-alt mr-3 text-lg text-blue-500"></i>
                         <span class="font-medium">Dashboard Admin</span>
                     </a>
                 </li>
                 <!-- Daftar Siswa -->
                 <li x-data="{ open: false }">
-                    <button @click="open = !open" class="flex items-center justify-between w-full p-3 text-gray-700 hover:bg-green-100 rounded-lg transition-colors duration-200 focus:outline-none">
+                    <button @click="open = !open" class="flex active:bg-green-100 focus:bg-green-100 items-center justify-between w-full p-3 text-gray-700 hover:bg-green-100 rounded-lg transition-colors duration-200 focus:outline-none">
                         <div class="flex items-center">
                             <i class="fas fa-user-graduate mr-3 text-lg text-green-500"></i>
-                            <span class="font-medium">Daftar Siswa</span>
+                            <span class="font-medium">Daftar Pengguna</span>
                         </div>
                         <i :class="open ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" class="text-sm"></i>
                     </button>
                     <ul x-show="open" x-transition class="mt-2 space-y-1 pl-12">
                         <li>
-                            <a href="#" class="flex items-center p-2 text-gray-600 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                            <a href="../pengguna/index.html" class="flex items-center p-2 text-gray-600 hover:bg-green-50 rounded-lg transition-colors duration-200">
                                 <i class="fas fa-circle mr-2 text-green-400"></i>
                                 Daftar Kesiswaan
                             </a>
@@ -169,13 +169,15 @@
             </div>
         </header>
 
+        
         <!-- Main Content Area -->
         <main class="flex-1 p-6 overflow-y-auto no-scrollbar">
             <h1 class="text-3xl font-semibold mb-6">Selamat Datang di Dashboard Admin</h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card List of User -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex items-center">
                     <div class="w-16 h-16 bg-red-100 rounded-full mr-4 flex items-center justify-center">
-                        <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+                        <i class="fas fa-user-secret text-red-500 text-2xl"></i>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Jumlah Pengawas</p>
@@ -186,7 +188,7 @@
                 <!-- Jumlah Kesiswaan -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex items-center">
                     <div class="w-16 h-16 bg-green-100 rounded-full mr-4 flex items-center justify-center">
-                        <i class="fas fa-user-graduate text-green-500 text-2xl"></i>
+                        <i class="far fa-id-card text-green-500 text-2xl"></i>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Jumlah Kesiswaan</p>
@@ -197,7 +199,7 @@
                 <!-- Jumlah Peserta Didik -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex items-center">
                     <div class="w-16 h-16 bg-blue-100 rounded-full mr-4 flex items-center justify-center">
-                        <i class="fas fa-user text-blue-500 text-2xl"></i>
+                        <i class="fas fa-user-graduate text-blue-500 text-2xl"></i>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Jumlah Peserta Didik</p>
@@ -205,6 +207,81 @@
                     </div>
                 </div>
             </div>
+            <!-- Table Recently Online -->
+            <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Recently Online</h2>
+
+                <!-- Search bar and entries control -->
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Entries per page dropdown -->
+                    <div>
+                        <label for="pagination" class="text-sm text-gray-600">Show</label>
+                        <select id="pagination" class="border border-gray-300 rounded-md py-1 px-2 ml-2 text-sm">
+                            <option value="10">10 Data</option>
+                            <option value="25">25 Data</option>
+                            <option value="50">50 Data</option>
+                            <option value="100">100 Data</option>
+                        </select>
+                    </div>
+                    <!-- Search bar -->
+                    <div>
+                        <input id="searchInput" type="text" placeholder="Search..." class="border border-gray-300 rounded-md py-1 px-4 text-sm" />
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table id="dataTable" class="min-w-full bg-white rounded-lg overflow-hidden shadow">
+                        <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <tr>
+                                <th class="p-4 text-left">No</th>
+                                <th class="p-4 text-left">Nama</th>
+                                <th class="p-4 text-left">Role</th>
+                                <th class="p-4 text-left">Status</th>
+                                <th class="p-4 text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Simulated data rows -->
+                            <!-- Rows akan diinject secara dinamis, contoh manual di bawah -->
+                            <tr>
+                                <td class="p-4">1</td>
+                                <td class="p-4">JzuvDev</td>
+                                <td class="p-4">
+                                    <span class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full mt-1">
+                                        Admin
+                                    </span>
+                                </td>
+                                <td class="p-4">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-600">
+                                        Online
+                                    </span>
+                                </td>
+                                <td class="p-4">
+                                    <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-150">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            <!-- Tambah lebih banyak row data sesuai kebutuhan -->
+                            <!-- Data akan diisi melalui backend atau API -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex justify-between items-center mt-4">
+                    <!-- Previous and Next buttons -->
+                    <div class="flex items-center space-x-2">
+                        <button id="prevPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 focus:outline-none">Previous</button>
+                        <button id="nextPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 focus:outline-none">Next</button>
+                    </div>
+                    <!-- Show entries text -->
+                    <p id="showEntries" class="text-sm text-gray-600">Showing 1 to 10 of 100 entries</p>
+                </div>
+            </div>
+
+
             <!-- Area for Charts -->
             <div class="mt-6 bg-white p-5 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold">Statistik Pelanggaran</h2>
@@ -213,6 +290,92 @@
         </main>
     </div>
 
+    <script> // Javascript Of Table
+        // Untuk table
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.querySelector('#dataTable tbody');
+            const searchInput = document.querySelector('#searchInput');
+            const paginationSelect = document.querySelector('#pagination');
+            const prevPageButton = document.querySelector('#prevPage');
+            const nextPageButton = document.querySelector('#nextPage');
+            const showEntries = document.querySelector('#showEntries');
+
+            let currentPage = 1;
+            let rowsPerPage = parseInt(paginationSelect.value, 10);
+
+            // Function to filter rows based on search input
+            function filterRows() {
+                const query = searchInput.value.toLowerCase();
+                const rows = table.querySelectorAll('tr');
+                const filteredRows = Array.from(rows).filter(row => {
+                    const cells = row.querySelectorAll('td');
+                    const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                    return text.includes(query);
+                });
+
+                return filteredRows;
+            }
+
+            // Function to update table pagination
+            function updatePagination() {
+                const filteredRows = filterRows();
+                const totalRows = filteredRows.length;
+                const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+                const start = (currentPage - 1) * rowsPerPage + 1;
+                const end = Math.min(start + rowsPerPage - 1, totalRows);
+
+                // Hide all rows first
+                Array.from(table.querySelectorAll('tr')).forEach(row => row.style.display = 'none');
+                
+                // Show only rows for the current page
+                filteredRows.forEach((row, index) => {
+                    if (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) {
+                        row.style.display = '';
+                    }
+                });
+
+                prevPageButton.disabled = currentPage === 1;
+                nextPageButton.disabled = currentPage === totalPages;
+
+                // Update "Show entries" text
+                showEntries.textContent = `Showing ${start} to ${end} of ${totalRows} entries`;
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', function() {
+                currentPage = 1;
+                updatePagination();
+            });
+
+            paginationSelect.addEventListener('change', function() {
+                rowsPerPage = parseInt(this.value, 10);
+                currentPage = 1;
+                updatePagination();
+            });
+
+            prevPageButton.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                }
+            });
+
+            nextPageButton.addEventListener('click', function() {
+                const totalRows = filterRows().length;
+                const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                }
+            });
+
+            // Initial setup
+            updatePagination();
+        });
+
+    </script>
     <script>
         // JavaScript untuk menampilkan jam
         setInterval(() => {
@@ -226,11 +389,11 @@
                 type: 'line',
             },
             series: [{
-                name: 'Pelanggaran',
-                data: [10, 20, 30, 15, 25, 40]
+                name: 'Point',
+                data: [1, 5, 15, 10, 5, 25, 15, 3, 15, 10, 5, 3]
             }],
             xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
             }
         };
         const chart = new ApexCharts(document.querySelector("#chart"), options);
